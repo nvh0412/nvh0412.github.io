@@ -28,13 +28,18 @@ module.exports = {
           cacheDirectory: true
         }
       },
-      { 
+      {
         test: /\.css$/,
         include: PATHS.app,
-        loader: "style!css"
+        loader: 'style!css?module=1'
+      },
+      {
+        test: /\.scss$/,
+        include: PATHS.app,
+        loader: 'style!css?module=1!sass'
       }
     ]
-  },  
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: 'src/index.html'
