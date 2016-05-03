@@ -17,7 +17,9 @@ export default class NavBar extends React.Component {
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <AppBar />
+        <AppBar
+          title="Title"
+        />
       </MuiThemeProvider>
     )
   }
