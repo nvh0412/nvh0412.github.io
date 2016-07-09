@@ -33,6 +33,34 @@ exports.setupCSS = function(paths) {
   };
 }
 
+exports.setupImage = function(paths) {
+  return {
+    module: {
+      loaders: [
+        {
+          test: /\.(jpg|png)$/,
+          loader: 'url?limit=25000',
+          include: paths
+        }
+      ]
+    }
+  }
+}
+
+exports.setupBabel = function(paths) {
+  return {
+    module: {
+      loaders: [
+        {
+          test: /\.jsx$/,
+          loaders: ['babel?cacheDirectory'],
+          include: paths
+        }
+      ]
+    }
+  }
+}
+
 exports.minify = function() {
   return {
     plugins: [

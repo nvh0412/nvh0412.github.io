@@ -9,6 +9,8 @@ const PATHS = {
   build: path.join(__dirname, 'build')
 };
 
+process.env.BABEL_ENV = TARGET;
+
 const common = {
   entry: {
     app: PATHS.app,
@@ -24,7 +26,13 @@ const common = {
     new HtmlWebpackPlugin({
       title: 'Vagabond'
     })
-  ]
+  ],
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
+  parts.setupCSS(PATHS.app),
+  parts.setupImage(PATHS.app),
+  parts.setupBabel(PATHS.app)
 };
 
 var config;
@@ -44,8 +52,7 @@ switch (process.env.npm_lifecycle_event) {
         name: 'vendor',
         entries: ['react']
       }),
-      parts.minify(),
-      parts.setupCSS(PATHS.app)
+      parts.minify()
     );
     break;
   case 'stats':
@@ -55,7 +62,6 @@ switch (process.env.npm_lifecycle_event) {
       {
         devtool: 'eval-source-map'
       },
-      parts.setupCSS(PATHS.app),
       parts.devServer({
         host: process.env.HOST,
         port: process.env.PORT
