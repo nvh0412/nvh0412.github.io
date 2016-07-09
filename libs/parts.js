@@ -83,6 +83,14 @@ exports.setFreeVariable = function(key, value) {
   };
 }
 
+exports.setFavicon = function() {
+  return {
+    plugins: [
+      new FaviconsWebpackPlugin('logo.png')
+    ]
+  }
+}
+
 exports.extractBundle = function(options) {
   const entry = {};
   entry[options.name] = options.entries;
