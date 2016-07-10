@@ -1,5 +1,4 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const merge = require('webpack-merge');
 const validate = require('webpack-validator');
 const parts = require('./libs/parts');
@@ -12,31 +11,33 @@ const PATHS = {
 
 process.env.BABEL_ENV = TARGET;
 
-const common = {
-  entry: {
-    app: PATHS.app,
+const common = merge({
+    entry: {
+      app: PATHS.app,
+    },
+    output: {
+      path: PATHS.build,
+      filename: '[name].[hash].js',
+      // This is used for require.ensure. The setup
+      // will work without but this is useful to set.
+      chunkFilename: '[chunkhash].js'
+    },
+    resolve: {
+      extensions: ['', '.js', '.jsx']
+    }
   },
-  output: {
-    path: PATHS.build,
-    filename: '[name].[hash].js',
-    // This is used for require.ensure. The setup
-    // will work without but this is useful to set.
-    chunkFilename: '[chunkhash].js'
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Vagabond'
-    })
-  ],
-  resolve: {
-    extensions: ['', '.js', '.jsx']
-  }
-};
+  parts.indexTemplate({
+    title: 'Kanban demo',
+    appMountId: 'app'
+  }),
+  parts.loadJSX(PATHS.app),
+  parts.lintJSX(PATHS.app)
+);
 
 var config;
 
 //Detect how npm is run and branch based on that
-switch (process.env.npm_lifecycle_event) {
+switch (TARGET) {
   case 'build':
     config = merge(common,
       {
@@ -53,8 +54,7 @@ switch (process.env.npm_lifecycle_event) {
       parts.minify(),
       parts.setFavicon(),
       parts.setupCSS(PATHS.app),
-      parts.setupImage(PATHS.app),
-      parts.setupBabel(PATHS.app)
+      parts.setupImage(PATHS.app)
     );
     break;
   case 'stats':
@@ -70,7 +70,7 @@ switch (process.env.npm_lifecycle_event) {
       }),
       parts.setupCSS(PATHS.app),
       parts.setupImage(PATHS.app),
-      parts.setupBabel(PATHS.app)
+      parts.npmInstall()
     );
 }
 

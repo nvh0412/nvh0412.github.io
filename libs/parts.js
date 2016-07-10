@@ -1,5 +1,20 @@
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const NpmInstallPlugin = require('npm-install-webpack-plugin');
+
+exports.indexTemplate = function(options) {
+  return {
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: require('html-webpack-template'),
+        title: options.title,
+        appMountId: options.appMountId,
+        inject: false
+      })
+    ]
+  };
+}
 
 exports.devServer = function(options) {
   return {
@@ -47,19 +62,21 @@ exports.setupImage = function(paths) {
   }
 }
 
-exports.setupBabel = function(paths) {
+exports.loadJSX = function(include) {
   return {
     module: {
       loaders: [
         {
-          test: /\.jsx$/,
+          test: /\.(js|jsx)$/,
+          // Enable caching for extra performance
           loaders: ['babel?cacheDirectory'],
-          include: paths
+          include: include
         }
       ]
     }
-  }
+  };
 }
+
 
 exports.minify = function() {
   return {
@@ -117,4 +134,28 @@ exports.clean = function(path) {
       })
     ]
   }
+}
+
+exports.lintJSX = function(include) {
+  return {
+    module: {
+      preLoaders: [
+        {
+          test: /\.(js|jsx)$/,
+          loaders: ['eslint'],
+          include: include
+        }
+      ]
+    }
+  };
+}
+
+exports.npmInstall = function(options) {
+  options = options || {};
+
+  return {
+    plugins: [
+      new NpmInstallPlugin(options)
+    ]
+  };
 }
