@@ -7,3 +7,4 @@ background_header: home-bg.jpg
 title: HoaNguyen Blog
 subtitle: Cool Blog for anyone.
 ---
+
