@@ -4,4 +4,6 @@
 # See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 layout: home
 background_header: home-bg.jpg
+title: HoaNguyen Blog
+subtitle: Cool Blog for anyone.
 ---

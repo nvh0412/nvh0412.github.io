@@ -1,6 +1,7 @@
 ---
 layout: page
 title: About
+background_header: about-bg.jpg
 permalink: /about/
 ---
 
