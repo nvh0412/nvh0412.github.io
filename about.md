@@ -1,16 +1,20 @@
 ---
 layout: page
-title: About
+title: Hoa Nguyen
 background_header: about-bg.jpg
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)
+My interests are in the latest techniques for sophisticated full-stack
+development. Development of complex applications/systems which apply lightweight
+stack is my focus, delivering a high-quality application.
 
-You can find the source code for the Jekyll new theme at:
-{% include icon-github.html username="jekyll" %} /
-[minima](https://github.com/jekyll/minima)
+I have experience with many major javascript frameworks, mobile frameworks, and
+backend frameworks. I have experience managing large and complicated application
+code bases. In the past roles, I've introduced unit testing, continuous
+integration, and automated integration testing.
 
-You can find the source code for Jekyll at
-{% include icon-github.html username="jekyll" %} /
-[jekyll](https://github.com/jekyll/jekyll)
+I like to approach Software problems with an engineering mindset. I really like
+work with other developers who want to share my passion and obsession over the
+software. 
+
