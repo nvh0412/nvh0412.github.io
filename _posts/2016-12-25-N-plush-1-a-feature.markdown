@@ -205,5 +205,64 @@ views/posts/725-20160918120741840748/e554fd834425697f04b28a155f7cfd0d (0.0ms)
 With the cache now warm, still using `includes` in the controller, we see the
 two queries and reads for each post:
 
+{% highlight ruby %}
+Started GET "/posts" for ::1 at 2016-09-18 08:27:36 -0400
+Processing by PostsController#index as HTML
+  Rendering posts/index.html.erb within layouts/application
+  Post Load (1.5ms)  SELECT  "posts".* FROM "posts" ORDER BY
+"posts"."published_at" DESC LIMIT $1  [["LIMIT", 20]]
+  Author Load (0.8ms)  SELECT "authors".* FROM "authors" WHERE "authors"."id" IN
+(90, 82, 83, 89, 81, 84, 85, 86, 87, 88)
+  Read fragment
+views/posts/679-20160918112202701660/e554fd834425697f04b28a155f7cfd0d (0.1ms)
+  Read fragment
+views/posts/725-20160918120741840748/e554fd834425697f04b28a155f7cfd0d (0.0ms)
+{% endhighlight %}
 
+Notice that the authors are still queried because we're still eager loading even
+though this data won't be use in a warm cache.What a waste! In truth, it doesn't
+matter much for this simplistic example, but we can imagine an eager-loaded
+complex query creating a problem for us in a real world use case.
+
+We can eliminate the wasted authors query by removing the `includes` method call
+from our controller. Now our fully-cached page request requires only one query
+for the posts:
+
+{% highlight ruby %}
+Started GET "/posts" for ::1 at 2016-09-18 07:41:09 -0400
+Processing by PostsController#index as HTML
+  Rendering posts/index.html.erb within layouts/application
+  Post Load (2.3ms)  SELECT "posts".* FROM "posts" ORDER BY
+"posts"."published_at" DESC
+  Read fragment
+views/posts/679-20160918112202701660/8c2dcb06ead7afb44586a0d022005ef0 (0.0ms)
+  Read fragment
+views/posts/725-20160918112202826113/8c2dcb06ead7afb44586a0d022005ef0 (0.0ms)
+{% endhighlight %}
+
+In either case, we want to be sure the post cache is expired if the author
+details change. We just need to create an action for updating data of author.
+
+Now that we're no longer eager loading authors, only the posts and authors
+who've been updated need to be rewritten to cache.
+
+Assuming authors and posts aren't updated frequently, leaving N+1 query in place
+along with a proper Russian Doll caching scheme might better for overall app
+performance than triggering complex eager loading queries on every request.
+
+## Go forth and measure
+
+Eager Loading may not always be the best the cure for our N+1 ailments.
+
+The intention of this article isn't to throw shit to eager loading - it's a
+important tool to have in your toolbox. This article encourages Rails Developers
+to understand how lazy loading and N+1 queries allow for Russian Doll caching to
+be a usefull alternative to addressing performance bottlenecks in your Rails
+applications.
+
+Keep in mind, Russian Doll caching may not the best approach for your app,
+especially if that cache is frequently updated or cleared, so it's up to you to
+determine the best approach.
+
+Just beware of silver bullets.
 
