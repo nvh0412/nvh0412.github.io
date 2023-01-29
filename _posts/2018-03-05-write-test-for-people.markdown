@@ -2,7 +2,6 @@
 layout: post
 title:  "Write test for People"
 date:   2018-03-05
-background_header: test_for_people.png
 subtitle: ""
 ---
 

@@ -2,7 +2,6 @@
 layout: post
 title:  "Does N+1 is actually a bug?"
 date:   2016-10-25
-background_header: nplus1.jpg
 subtitle: ""
 ---
 
