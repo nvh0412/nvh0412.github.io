@@ -9,9 +9,9 @@ ruby RUBY_VERSION
 #
 # This will help ensure the proper Jekyll version is running.
 # Happy Jekylling!
-gem "jekyll", '3.9.2'
+gem "jekyll", '3.9.3'
 gem "minima", "~> 2.0"
-gem 'github-pages', '227'
+gem 'github-pages', '228'
 gem 'webrick'
 
 # If you want to use GitHub Pages, remove the "gem "jekyll"" above and
