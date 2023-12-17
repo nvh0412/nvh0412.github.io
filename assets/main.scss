@@ -20,6 +20,12 @@ p {
   a {
     text-decoration: underline;
   }
+
+  img {
+    width: calc(100% + 64px);
+    margin-left: -32px;
+    margin-right: -32px;
+  }
 }
 
 h1,
