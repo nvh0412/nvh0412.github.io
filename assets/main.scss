@@ -8,7 +8,7 @@
 
 body {
   @include serif-font;
-  font-size: 20px;
+  font-size: 18px;
   color: $gray-dark;
 }
 
@@ -277,7 +277,7 @@ hr.small {
   @media only screen and (min-width: 768px) {
     > a {
       > .post-title {
-        font-size: 36px;
+        font-size: 24px;
       }
     }
   }
@@ -286,7 +286,7 @@ hr.small {
 // Sections
 
 .section-heading {
-  font-size: 36px;
+  font-size: 24px;
   margin-top: 60px;
   font-weight: 700;
 }
